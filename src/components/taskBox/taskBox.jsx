@@ -4,9 +4,13 @@ import { MdDeleteOutline } from 'react-icons/md'
 import { TaskType } from '../../types/TaskType'
 
 function TaskBox({ value, id, setTasks, type }) {
-    
+
+
     const deleteItem = () => {
+        let forLocSt
         setTasks(currval => {
+            forLocSt = currval.filter(task => task.id !== id)
+            localStorage.setItem('data', JSON.stringify(forLocSt))
             return (
                 currval.filter(task => task.id !== id)
             )
@@ -14,7 +18,15 @@ function TaskBox({ value, id, setTasks, type }) {
     }
 
     const changeTypeTodo = () => {
+        let forLocStTask
         setTasks(currval => {
+            forLocStTask = currval.map(task => {
+                if (task.id === id && task.type === TaskType['TODO']) {
+                    task.type = TaskType['PROGRESS']
+                }
+                return task
+            })
+            localStorage.setItem('data', JSON.stringify(forLocStTask))
             return (
                 currval.map(task => {
                     if (task.id === id && task.type === TaskType['TODO']) {
@@ -27,33 +39,45 @@ function TaskBox({ value, id, setTasks, type }) {
     }
 
     const changeTypeProgress = () => {
-        return (
-            setTasks(currval => {
-                return (
-                    currval.map(task => {
-                        if (task.id === id && task.type === TaskType['PROGRESS']) {
-                            task.type = TaskType['FINISHED']
-                        }
-                        return task
-                    })
-                )
+        let forLocStTask
+        setTasks(currval => {
+            forLocStTask = currval.map(task => {
+                if (task.id === id && task.type === TaskType['PROGRESS']) {
+                    task.type = TaskType['FINISHED']
+                }
+                return task
             })
-        )
+            localStorage.setItem('data', JSON.stringify(forLocStTask))
+            return (
+                currval.map(task => {
+                    if (task.id === id && task.type === TaskType['PROGRESS']) {
+                        task.type = TaskType['FINISHED']
+                    }
+                    return task
+                })
+            )
+        })
     }
 
     const changeTypeFinished = () => {
-        return (
-            setTasks(currval => {
-                return (
-                    currval.map(task => {
-                        if (task.id === id && task.type === TaskType['FINISHED']) {
-                            task.type = TaskType['PROGRESS']
-                        }
-                        return task
-                    })
-                )
+        let forLocStTask
+        setTasks(currval => {
+            forLocStTask = currval.map(task => {
+                if (task.id === id && task.type === TaskType['FINISHED']) {
+                    task.type = TaskType['PROGRESS']
+                }
+                return task
             })
-        )
+            localStorage.setItem('data', JSON.stringify(forLocStTask))
+            return (
+                currval.map(task => {
+                    if (task.id === id && task.type === TaskType['FINISHED']) {
+                        task.type = TaskType['PROGRESS']
+                    }
+                    return task
+                })
+            )
+        })
     }
 
     return (
@@ -73,7 +97,7 @@ function TaskBox({ value, id, setTasks, type }) {
                 <input className={style.input__add__button} type="checkbox" onChange={changeTypeProgress} />
             }
             {type === TaskType['FINISHED'] &&
-                <input className={style.input__add__button} type="checkbox" defaultChecked onChange={changeTypeFinished}  />
+                <input className={style.input__add__button} type="checkbox" defaultChecked onChange={changeTypeFinished} />
             }
         </div>
     )

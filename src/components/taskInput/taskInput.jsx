@@ -20,6 +20,7 @@ function TaskInput({ setTasks, tasks }) {
                 type: TaskType['TODO']
             }
             setTasks([newTask])
+            localStorage.setItem('data', JSON.stringify([newTask]))
             setInputValue('')
         }
         else if (tasks.length !== 0 && inputValue) {
@@ -32,6 +33,7 @@ function TaskInput({ setTasks, tasks }) {
             setTasks(currVal => {
                 return [...currVal, newTask]
             })
+            localStorage.setItem('data', JSON.stringify([...tasks, newTask]))
             setInputValue('')
         }
     }

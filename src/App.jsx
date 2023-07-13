@@ -6,7 +6,11 @@ import { useEffect, useState } from "react";
 import { dbTasks } from "./database";
 
 function App() {
-  const [tasks, setTasks] = useState(dbTasks)
+  if (localStorage.getItem('data') === 'undefined' || localStorage.getItem('data') == undefined) {
+    console.log(1)
+    localStorage.setItem('data', JSON.stringify([]))
+  }
+  const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem('data')))
   useEffect(() => {
     console.log(tasks)
     console.log('Component did mount')
