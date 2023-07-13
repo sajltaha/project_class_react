@@ -12,7 +12,7 @@ function TaskInput({ setTasks, tasks }) {
     }
 
     const handleClick = () => {
-        if (tasks.length == 0) {
+        if (tasks.length === 0 && inputValue) {
             const newTask = {
                 id: 1,
                 value: inputValue,
@@ -22,7 +22,7 @@ function TaskInput({ setTasks, tasks }) {
             setTasks([newTask])
             setInputValue('')
         }
-        else {
+        else if (tasks.length !== 0 && inputValue) {
             const newTask = {
                 id: tasks[tasks.length - 1].id + 1,
                 value: inputValue,
