@@ -1,0 +1,9 @@
+.tasks__grid__item{
+    background: var(--primary-color);
+    border-radius: var(--app-border-radius);
+}
+
+.tasks__header{
+    font-weight: bold;
+    padding: 10px 0;
+}
